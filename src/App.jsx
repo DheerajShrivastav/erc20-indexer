@@ -18,24 +18,40 @@ function App() {
   const [hasQueried, setHasQueried] = useState(false);
   const [tokenDataObjects, setTokenDataObjects] = useState([]);
 
+  async function connetWallet(params) {
+    try {
+      const { ethereum } = window
+
+      if (!ethereum) {
+        console.log('please install MetaMask')
+      }
+
+      const accounts = await ethereum.request({
+        method: 'eth_requestAccounts',
+      })
+      setUserAddress(accounts[0])
+    } catch (error) {
+      console.log(error)
+    }
+  }
   async function getTokenBalance() {
     const config = {
-      apiKey: '<-- COPY-PASTE YOUR ALCHEMY API KEY HERE -->',
-      network: Network.ETH_MAINNET,
-    };
+      apiKey: 'QfsaKZK96zCh4G9gO22K9sDnGNM5g2o-',
+      network: Network.ETH_SEPOLIA,
+    }
 
-    const alchemy = new Alchemy(config);
-    const data = await alchemy.core.getTokenBalances(userAddress);
+    const alchemy = new Alchemy(config)
+    const data = await alchemy.core.getTokenBalances(userAddress)
 
-    setResults(data);
+    setResults(data)
 
-    const tokenDataPromises = [];
+    const tokenDataPromises = []
 
     for (let i = 0; i < data.tokenBalances.length; i++) {
       const tokenData = alchemy.core.getTokenMetadata(
         data.tokenBalances[i].contractAddress
-      );
-      tokenDataPromises.push(tokenData);
+      )
+      tokenDataPromises.push(tokenData)
     }
 
     setTokenDataObjects(await Promise.all(tokenDataPromises));
@@ -105,7 +121,7 @@ function App() {
                   </Box>
                   <Image src={tokenDataObjects[i].logo} />
                 </Flex>
-              );
+              )
             })}
           </SimpleGrid>
         ) : (
@@ -113,7 +129,7 @@ function App() {
         )}
       </Flex>
     </Box>
-  );
+  )
 }
 
-export default App;
+export default App
