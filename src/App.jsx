@@ -8,7 +8,6 @@ import {
   Input,
   SimpleGrid,
   Text,
-  CircularProgress,
 } from '@chakra-ui/react'
 import { Alchemy, Network, Utils } from 'alchemy-sdk'
 import { useState } from 'react'
@@ -20,7 +19,7 @@ function App() {
   const [tokenDataObjects, setTokenDataObjects] = useState([])
   const [loading, setLoading] = useState(false)
 
-  async function connetWallet(params) {
+  async function connetWallet() {
     try {
       const { ethereum } = window
 
