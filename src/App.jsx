@@ -8,15 +8,17 @@ import {
   Input,
   SimpleGrid,
   Text,
-} from '@chakra-ui/react';
-import { Alchemy, Network, Utils } from 'alchemy-sdk';
-import { useState } from 'react';
+  CircularProgress,
+} from '@chakra-ui/react'
+import { Alchemy, Network, Utils } from 'alchemy-sdk'
+import { useState } from 'react'
 
 function App() {
-  const [userAddress, setUserAddress] = useState('');
-  const [results, setResults] = useState([]);
-  const [hasQueried, setHasQueried] = useState(false);
-  const [tokenDataObjects, setTokenDataObjects] = useState([]);
+  const [userAddress, setUserAddress] = useState('')
+  const [results, setResults] = useState([])
+  const [hasQueried, setHasQueried] = useState(false)
+  const [tokenDataObjects, setTokenDataObjects] = useState([])
+  const [loading, setLoading] = useState(false)
 
   async function connetWallet(params) {
     try {
@@ -35,6 +37,7 @@ function App() {
     }
   }
   async function getTokenBalance() {
+    setLoading(true)
     const config = {
       apiKey: 'QfsaKZK96zCh4G9gO22K9sDnGNM5g2o-',
       network: Network.ETH_SEPOLIA,
@@ -54,8 +57,9 @@ function App() {
       tokenDataPromises.push(tokenData)
     }
 
-    setTokenDataObjects(await Promise.all(tokenDataPromises));
-    setHasQueried(true);
+    setTokenDataObjects(await Promise.all(tokenDataPromises))
+    setHasQueried(true)
+    setLoading(false)
   }
   return (
     <Box w="100vw">
@@ -92,8 +96,13 @@ function App() {
           bgColor="white"
           fontSize={24}
         />
+        <Text>or</Text>
+        <Button fontsize={20} onClick={connetWallet} mt={36} bgColor={'blue'}>
+          Connect Wallet
+        </Button>
+
         <Button fontSize={20} onClick={getTokenBalance} mt={36} bgColor="blue">
-          Check ERC-20 Token Balances
+          {loading ? <>Loding..</> : <>Check ERC-20 Token Balances</>}
         </Button>
 
         <Heading my={36}>ERC-20 token balances:</Heading>
