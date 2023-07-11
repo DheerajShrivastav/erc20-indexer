@@ -107,15 +107,16 @@ function App() {
         <Heading my={36}>ERC-20 token balances:</Heading>
 
         {hasQueried ? (
-          <SimpleGrid w={'90vw'} columns={4} spacing={24}>
+          <SimpleGrid columns={4} w={'fit-content'} spacing={24}>
             {results.tokenBalances.map((e, i) => {
               return (
                 <Flex
                   flexDir={'column'}
                   color="white"
                   bg="blue"
-                  w={'20vw'}
+                  w={'fit-content'}
                   key={e.id}
+                  padding={'20px'}
                 >
                   <Box>
                     <b>Symbol:</b> ${tokenDataObjects[i].symbol}&nbsp;
