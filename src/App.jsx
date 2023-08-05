@@ -94,6 +94,7 @@ function App() {
           p={4}
           bgColor="white"
           fontSize={24}
+          placeholder= {userAddress}
         />
         <Text>or</Text>
         <Button fontsize={20} onClick={connetWallet} mt={36} bgColor={'blue'}>
